@@ -1,0 +1,357 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Q5 + Q9 Notebook &mdash; Dual Autodiff Package beta documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=d2d258e8" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f0d2c090"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Dual Autodiff Tutorial" href="dual_autodiff.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Dual Autodiff Package
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="tutorial_instructions.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial_instructions.html#features">Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial_instructions.html#installation">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial_instructions.html#usage">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial_instructions.html#contributing">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial_instructions.html#license">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dual_autodiff.html">Dual Autodiff Tutorial</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Q5 + Q9 Notebook</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Dual Autodiff Package</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Q5 + Q9 Notebook</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/q5+q9.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="q5-q9-notebook">
+<h1>Q5 + Q9 Notebook<a class="headerlink" href="#q5-q9-notebook" title="Link to this heading"></a></h1>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dual_autodiff.dual</span> <span class="kn">import</span> <span class="n">Dual</span> <span class="k">as</span> <span class="n">pydual</span>
+<span class="kn">from</span> <span class="nn">dual_autodiff_x.dual_autodiff_x.dual</span> <span class="kn">import</span> <span class="n">Dual</span> <span class="k">as</span> <span class="n">cydual</span>
+</pre></div>
+</div>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">dual_autodiff.q.q5</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">timeit</span>
+<span class="kn">from</span> <span class="nn">timeit</span> <span class="kn">import</span> <span class="n">Timer</span>
+<span class="kn">from</span> <span class="nn">memory_profiler</span> <span class="kn">import</span> <span class="n">memory_usage</span>
+</pre></div>
+</div>
+<p>Given the function:</p>
+<p>f(x) = log(sin(x)) + x^2cos(x)</p>
+<p>We are computing the derivative using three different methods:</p>
+<ol class="arabic simple">
+<li><p>Dual Numbers: Employing dual numbers to calculate the derivative.</p></li>
+<li><p>Analytical Derivative: Deriving the derivative directly using
+calculus.</p></li>
+<li><p>Numerical Derivative: Estimating the derivative using a numerical
+approximation method.</p></li>
+</ol>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="mf">1.5</span>
+
+<span class="n">dual_value</span> <span class="o">=</span> <span class="n">dual_function_derivative</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">analytical_value</span> <span class="o">=</span> <span class="n">analytical_derivative</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c1">#varying numerical values:</span>
+<span class="n">numerical_value</span> <span class="o">=</span> <span class="n">numerical_derivative</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+<span class="n">numerical_value2</span> <span class="o">=</span> <span class="n">numerical_derivative</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">)</span>
+<span class="n">numerical_value3</span> <span class="o">=</span> <span class="n">numerical_derivative</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mf">0.0001</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dual Number Value: </span><span class="si">{</span><span class="n">dual_value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Analytical Derivative: </span><span class="si">{</span><span class="n">analytical_value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Numerical Derivative (s = 0.01): </span><span class="si">{</span><span class="n">numerical_value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Numerical Derivative (s = 0.001): </span><span class="si">{</span><span class="n">numerical_value2</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Numerical Derivative (s = 0.0001): </span><span class="si">{</span><span class="n">numerical_value3</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;dual real&quot;</span><span class="p">,</span> <span class="n">dual_value</span><span class="o">.</span><span class="n">dual</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">Dual</span> <span class="n">Number</span> <span class="n">Value</span><span class="p">:</span> <span class="n">Dual</span><span class="p">(</span><span class="n">real</span> <span class="o">=</span> <span class="mf">0.15665054756073515</span><span class="p">,</span> <span class="n">dual</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.9612372705533612</span><span class="p">)</span>
+<span class="n">Analytical</span> <span class="n">Derivative</span><span class="p">:</span> <span class="o">-</span><span class="mf">1.9612372705533612</span>
+<span class="n">Numerical</span> <span class="n">Derivative</span> <span class="p">(</span><span class="n">s</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">):</span> <span class="o">-</span><span class="mf">1.9613078471950178</span>
+<span class="n">Numerical</span> <span class="n">Derivative</span> <span class="p">(</span><span class="n">s</span> <span class="o">=</span> <span class="mf">0.001</span><span class="p">):</span> <span class="o">-</span><span class="mf">1.9612379763359749</span>
+<span class="n">Numerical</span> <span class="n">Derivative</span> <span class="p">(</span><span class="n">s</span> <span class="o">=</span> <span class="mf">0.0001</span><span class="p">):</span> <span class="o">-</span><span class="mf">1.9612372776108</span>
+<span class="n">dual</span> <span class="n">real</span> <span class="o">-</span><span class="mf">1.9612372705533612</span>
+</pre></div>
+</div>
+<p>Based on these derivative results, we observe that the derivative
+calculated using dual numbers closely aligns with both the analytical
+and numerical derivatives. To gain deeper insights, we can visualized
+the comparison:</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dual_d</span> <span class="o">=</span> <span class="n">dual_value</span><span class="o">.</span><span class="n">dual</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="n">dual_d</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">linestyle</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Dual Derivative&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="n">analytical_value</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linestyle</span> <span class="o">=</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Analytical Derivative&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Comparison Between the Dual and Analytical Derivative&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Log Scale (step size)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Derivative&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<img alt="_images/q5%2Bq9_6_0.png" src="_images/q5%2Bq9_6_0.png" />
+<p>In this graph we can see that the analytical derivative and derivative
+calculated using dual numers share the same outcome. This outcome
+indicates the validity of the dual number approach for derivative
+computation. Since the analytical derivative is derived using exact math
+principles, its agreement with the dual number result confirms that dual
+numbers provide accurate and reliable derivative calculations.</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">s_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="n">numerical_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">numerical_derivative</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">s_values</span><span class="p">]</span>
+<span class="n">errors</span> <span class="o">=</span> <span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">num</span> <span class="o">-</span> <span class="n">analytical_value</span><span class="p">)</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">numerical_values</span><span class="p">]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">s_values</span><span class="p">,</span> <span class="n">numerical_values</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Numerical Derivative&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="n">analytical_value</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linestyle</span> <span class="o">=</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;Analytical Derivative&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Step Size (h)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Derivative Value&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Convergence of numerical derivative&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">s_values</span><span class="p">,</span> <span class="n">errors</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;Error relative to increasingly larger step sizes&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Step Size (s)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Error&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Error vs Step Size&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<img alt="_images/q5%2Bq9_8_0.png" src="_images/q5%2Bq9_8_0.png" />
+<img alt="_images/q5%2Bq9_8_1.png" src="_images/q5%2Bq9_8_1.png" />
+<p>These graphs demonstrate that as the numerical step size increases, the
+error rate grows, following an exponential trend. This indicates that
+smaller step sizes yield results that align much closer to the
+analytical derivative, whereas larger step sizes introduce greater
+discrepancies.</p>
+<p>In this upcoming code we will compare the performance of the python
+dual_autodiff package and the cythonized dual_autodiff package,
+dual_autodiff_x:</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">py_add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+
+<span class="k">def</span> <span class="nf">py_sub</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">-</span> <span class="n">b</span>
+
+<span class="k">def</span> <span class="nf">py_mult</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span>
+
+<span class="k">def</span> <span class="nf">py_div</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span>
+
+<span class="k">def</span> <span class="nf">cy_add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+
+<span class="k">def</span> <span class="nf">cy_sub</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">-</span> <span class="n">b</span>
+
+<span class="k">def</span> <span class="nf">cy_mult</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span>
+
+<span class="k">def</span> <span class="nf">cy_div</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span>
+
+<span class="n">py_a</span><span class="p">,</span> <span class="n">py_b</span> <span class="o">=</span> <span class="n">pydual</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">pydual</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">cy_a</span><span class="p">,</span> <span class="n">cy_b</span> <span class="o">=</span> <span class="n">cydual</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">cydual</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+
+<span class="n">operations</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;add&quot;</span><span class="p">,</span> <span class="s2">&quot;sub&quot;</span><span class="p">,</span> <span class="s2">&quot;mult&quot;</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">]</span>
+<span class="n">py_functions</span> <span class="o">=</span> <span class="p">[</span><span class="n">py_add</span><span class="p">,</span> <span class="n">py_sub</span><span class="p">,</span> <span class="n">py_mult</span><span class="p">,</span> <span class="n">py_div</span><span class="p">]</span>
+<span class="n">cy_functions</span> <span class="o">=</span> <span class="p">[</span><span class="n">cy_add</span><span class="p">,</span> <span class="n">cy_sub</span><span class="p">,</span> <span class="n">cy_mult</span><span class="p">,</span> <span class="n">cy_div</span><span class="p">]</span>
+
+<span class="n">py_time</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">cy_time</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">func</span> <span class="ow">in</span> <span class="n">py_functions</span><span class="p">:</span>
+    <span class="n">timer</span> <span class="o">=</span> <span class="n">timeit</span><span class="o">.</span><span class="n">Timer</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">func</span><span class="p">(</span><span class="n">py_a</span><span class="p">,</span> <span class="n">py_b</span><span class="p">))</span>
+    <span class="n">py_time</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">timer</span><span class="o">.</span><span class="n">timeit</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1000</span><span class="p">))</span>
+
+
+<span class="k">for</span> <span class="n">func</span> <span class="ow">in</span> <span class="n">cy_functions</span><span class="p">:</span>
+    <span class="n">timer</span> <span class="o">=</span> <span class="n">timeit</span><span class="o">.</span><span class="n">Timer</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">func</span><span class="p">(</span><span class="n">cy_a</span><span class="p">,</span> <span class="n">cy_b</span><span class="p">))</span>
+    <span class="n">cy_time</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">timer</span><span class="o">.</span><span class="n">timeit</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1000</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">operation</span><span class="p">,</span> <span class="n">py_t</span><span class="p">,</span> <span class="n">cy_t</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">operations</span><span class="p">,</span> <span class="n">py_time</span><span class="p">,</span> <span class="n">cy_time</span><span class="p">):</span>
+    <span class="n">difference</span> <span class="o">=</span> <span class="n">py_t</span> <span class="o">-</span> <span class="n">cy_t</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Time difference for </span><span class="si">{</span><span class="n">operation</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">difference</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">Time</span> <span class="n">difference</span> <span class="k">for</span> <span class="n">add</span><span class="p">:</span> <span class="o">-</span><span class="mf">6.874901009723544e-05</span> <span class="n">seconds</span>
+<span class="n">Time</span> <span class="n">difference</span> <span class="k">for</span> <span class="n">sub</span><span class="p">:</span> <span class="o">-</span><span class="mf">7.095799082890153e-05</span> <span class="n">seconds</span>
+<span class="n">Time</span> <span class="n">difference</span> <span class="k">for</span> <span class="n">mult</span><span class="p">:</span> <span class="o">-</span><span class="mf">9.450002107769251e-05</span> <span class="n">seconds</span>
+<span class="n">Time</span> <span class="n">difference</span> <span class="k">for</span> <span class="n">div</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.00035987497540190816</span> <span class="n">seconds</span>
+</pre></div>
+</div>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">operations</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;add&quot;</span><span class="p">,</span> <span class="s2">&quot;sub&quot;</span><span class="p">,</span> <span class="s2">&quot;mult&quot;</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">operations</span><span class="p">,</span> <span class="n">cy_time</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Cython&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;orange&quot;</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.7</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">operations</span><span class="p">,</span> <span class="n">py_time</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Python&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.7</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Execution Time (seconds)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Performance Comparison: Python vs Cython Dual Arithmetic Operations&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<img alt="_images/q5%2Bq9_12_0.png" src="_images/q5%2Bq9_12_0.png" />
+<p>Cython is slower in this case because the Dual class and its operations
+still rely on python’s dynamic type system and special methods (<strong>add</strong>,
+<strong>mul</strong>, <strong>sub</strong>, <strong>div</strong>). While cython compiles the code into C, it
+still interacts with python objects at runtime. This interaction
+includes dynamic type checking, memory management, and special method
+calls, which all introduce python level overhead that cython cannot
+bypass without explicit typecasting or translation to pure C-based code.
+Additionally, each operation with the dual class involves the creation
+of new dual objects, which creates python level object initialization
+overhead which further limits cython’s performance advantages.</p>
+<p>Cython does well with tasks that are computation heavy; such as
+numerical array manipulations or matrix operations, where python’s
+runtime overhead is minimized and C code optimization can be fully
+utilized. However, in this case, implementation involves frequent python
+object interactions and method dispatching which limits cython’s
+potential performance improvements. This outcome showcases the
+importance of explicit static typing and restructuring object oriented
+code for cython to get the best performance possible.</p>
+<p>Here is a nested loop example:</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">poly_eval_py</span><span class="p">():</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">pydual</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">pydual</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1000</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="n">x</span><span class="o">**</span><span class="n">i</span>
+    <span class="k">return</span> <span class="n">result</span>
+
+<span class="k">def</span> <span class="nf">poly_eval_cy</span><span class="p">():</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">cydual</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">cydual</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1000</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="n">x</span><span class="o">**</span><span class="n">i</span>
+    <span class="k">return</span> <span class="n">result</span>
+
+<span class="n">py_timer</span> <span class="o">=</span> <span class="n">Timer</span><span class="p">(</span><span class="n">poly_eval_py</span><span class="p">)</span>
+<span class="n">cy_timer</span> <span class="o">=</span> <span class="n">Timer</span><span class="p">(</span><span class="n">poly_eval_cy</span><span class="p">)</span>
+<span class="n">py_time</span> <span class="o">=</span> <span class="n">py_timer</span><span class="o">.</span><span class="n">timeit</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">cy_time</span> <span class="o">=</span> <span class="n">cy_timer</span><span class="o">.</span><span class="n">timeit</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">cy_time</span> <span class="o">-</span> <span class="n">py_time</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="mf">0.0008500409894622862</span>
+</pre></div>
+</div>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Python&quot;</span><span class="p">,</span> <span class="s2">&quot;Cython&quot;</span><span class="p">]</span>
+<span class="n">times</span> <span class="o">=</span> <span class="p">[</span><span class="n">py_time</span><span class="p">,</span> <span class="n">cy_time</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">times</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Time Taken (seconds)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Performance Comparison: Python vs Cython&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">linestyle</span> <span class="o">=</span> <span class="s1">&#39;--&#39;</span> <span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.7</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="_images/q5%2Bq9_16_0.png" src="_images/q5%2Bq9_16_0.png" />
+<p>Although the .pyx file was not typecast, this visual demonstrates that
+Cython is still more optimized than python when executing nested loops.
+This is primarily because Python loops incur runtime overhead due to
+dynamic type checking, which involves verifying the type of each
+variable at runtime during each iteration. In contrast, Cython compiles
+the code into C, eliminating the need for runtime type checking by using
+static typing which streamlines loop execution.</p>
+<p>Additionally, python’s range function introduces more overhead by
+creating iterator that keeps track of its progress during each loop
+iteration. However, cython translates loops directly into C-style for
+loops which execute faster because they don’t have extra overhead. These
+optimizations make cython a more efficient choice for computationally
+expensive tasks involving nested loops.</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="dual_autodiff.html" class="btn btn-neutral float-left" title="Dual Autodiff Tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Lily Rausser.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

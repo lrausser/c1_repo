@@ -1,0 +1,31 @@
+[build-system]
+requires = [
+    "setuptools>=61.0",
+    "wheel",
+    "cython>=3.0.0",
+    "numpy>=1.21.0",
+    "cibuildwheel",
+    "Cython"
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dual_autodiff_x"
+version = "0.1.0"
+description = "Cythonized automatic differentiation using dual numbers"
+authors = [
+    {name = "Lily Rausser", email = "lsr34@cam.ac.uk"}
+]
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.21.0"
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+packages = ["dual_autodiff_x"]
+
+[tool.cibuildwheel]
+build = ["cp310-manylinux_x86_64", "cp311-manylinux_x86_64"]
+# Skip unnecessary builds
+skip = ["*-musllinux_*"]

@@ -1,0 +1,17 @@
+Metadata-Version: 2.1
+Name: dual_autodiff
+Version: 0.1.1.dev4
+Summary: A Python package that performs automatic differentiation using dual numbers.
+Author-email: Lily Rausser <lsr34@cam.ac.uk>
+Project-URL: Documentation, https://github.com/lrausser/dual_autodiff/docs
+Project-URL: Source, https://github.com/yourusername/dual_autodiff
+Project-URL: Issues, https://github.com/yourusername/dual_autodiff/issues
+Keywords: Automatic Differentiation,Dual Numbers,Differentiation,Mathemetical Transformations
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Information Technology
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Topic :: Software Development :: Libraries
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+Requires-Dist: pytest

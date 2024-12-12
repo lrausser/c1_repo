@@ -1,0 +1,411 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutorial &mdash; Dual Autodiff Package beta documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=d2d258e8" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f0d2c090"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Dual Autodiff Tutorial" href="dual_autodiff.html" />
+    <link rel="prev" title="Dual_Autodiff Package Documentation" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Dual Autodiff Package
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#features">Features</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#dual_autodiff.Dual"><code class="docutils literal notranslate"><span class="pre">Dual</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#dual_autodiff.Dual.__add__"><code class="docutils literal notranslate"><span class="pre">Dual.__add__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dual_autodiff.Dual.__init__"><code class="docutils literal notranslate"><span class="pre">Dual.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dual_autodiff.Dual.__mul__"><code class="docutils literal notranslate"><span class="pre">Dual.__mul__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dual_autodiff.Dual.__sub__"><code class="docutils literal notranslate"><span class="pre">Dual.__sub__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dual_autodiff.Dual.__truediv__"><code class="docutils literal notranslate"><span class="pre">Dual.__truediv__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dual_autodiff.Dual.cos"><code class="docutils literal notranslate"><span class="pre">Dual.cos()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dual_autodiff.Dual.exp"><code class="docutils literal notranslate"><span class="pre">Dual.exp()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dual_autodiff.Dual.log"><code class="docutils literal notranslate"><span class="pre">Dual.log()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dual_autodiff.Dual.sin"><code class="docutils literal notranslate"><span class="pre">Dual.sin()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dual_autodiff.Dual.tan"><code class="docutils literal notranslate"><span class="pre">Dual.tan()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#usage">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#contributing">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#license">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dual_autodiff.html">Dual Autodiff Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="q5%2Bq9.html">Q5 + Q9 Notebook</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Dual Autodiff Package</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Tutorial</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/tutorial_instructions.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="tutorial">
+<h1>Tutorial<a class="headerlink" href="#tutorial" title="Link to this heading"></a></h1>
+<p>The <strong>Dual_Autodiff Package</strong> is a python package that performs automatic differentiation using dual numbers.
+This approach to compute derivatives with dual numbers is known as forward-mode automatic differentiation.
+Automatic differentiation is at the core of learning algorithms for deep neural networks. The forward mode is
+efficient for functions with relatively few input variables but many output variables, like a deep neural
+network with a few nodes in the input layer and many nodes in the output layer.</p>
+<p>Formally, dual numbers are like complex numbers, but instead of a real and imaginary part, they have a real part and a dual. In the same way the
+complex part of complex numbers is carried by i, the dual part of dual numbers is carried by epsilon. The major
+difference with complex numbers is that instead of the imaginary unit <span class="math notranslate nohighlight">\(i^2 = -1\)</span>, we have <span class="math notranslate nohighlight">\(\epsilon^2 = 0\)</span>.</p>
+<p>Consider the dual number <span class="math notranslate nohighlight">\(x = a + b\epsilon\)</span>. Then, <span class="math notranslate nohighlight">\(x^2 = (a + b\epsilon)^2 = a^2 + 2ab\epsilon\)</span>. Note that the derivative of <span class="math notranslate nohighlight">\(x^2\)</span>
+with respect to <span class="math notranslate nohighlight">\(x\)</span> is <span class="math notranslate nohighlight">\(2ax\)</span> , thus, with <span class="math notranslate nohighlight">\(b = 1\)</span> , the dual part of <span class="math notranslate nohighlight">\(x^2\)</span> , i.e., <span class="math notranslate nohighlight">\(2ab\epsilon\)</span>, is the derivative of <span class="math notranslate nohighlight">\(x^2\)</span>
+with respect to <span class="math notranslate nohighlight">\(x\)</span> evaluated at <span class="math notranslate nohighlight">\(x = a\)</span>. In fact, you can show that any function <span class="math notranslate nohighlight">\(f(x)\)</span> can be extended to dual numbers and that its dual part is its derivative.
+You have: <span class="math notranslate nohighlight">\(f(a + b\epsilon) = f(a) + f'(a)b\epsilon\)</span>.</p>
+</section>
+<section id="features">
+<h1>Features<a class="headerlink" href="#features" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p><strong>Dual class</strong>: Core attributes and methods, including math functions that compute automatic differentiation using dual numbers.</p></li>
+</ul>
+<dl class="py class">
+<dt class="sig sig-object py" id="dual_autodiff.Dual">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dual_autodiff.</span></span><span class="sig-name descname"><span class="pre">Dual</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">real</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dual</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dual_autodiff.Dual" title="Link to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="dual_autodiff.Dual.__add__">
+<span class="sig-name descname"><span class="pre">__add__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other_dual</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dual_autodiff.Dual.__add__" title="Link to this definition"></a></dt>
+<dd><p>This add method computes the sum of the current dual
+number and another number (either dual or scalar):</p>
+<p>(a + bε) + (c + dε) = (a + c) + (b + d)ε</p>
+<p>Returns:</p>
+<dl class="simple">
+<dt>Dual</dt><dd><p>a new Dual object that is the sum of the current dual
+and the other dual/scalar value.</p>
+</dd>
+</dl>
+<p>Examples:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d1</span> <span class="o">=</span> <span class="n">Dual</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d2</span> <span class="o">=</span> <span class="n">Dual</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d1</span> <span class="o">+</span> <span class="n">d2</span>
+<span class="go">Dual(real = 5, dual = 7)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d1</span> <span class="o">+</span> <span class="mi">5</span>
+<span class="go">Dual(real = 7, dual = 3)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dual_autodiff.Dual.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">real</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dual</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dual_autodiff.Dual.__init__" title="Link to this definition"></a></dt>
+<dd><p>__init__ allows us to initialize a dual number</p>
+<p>Dual numbers are like complex numbers, but instead of a real
+and imaginary part, they have a real part and a dual. In the
+same way the complex part of complex numbers is carried by i,
+the dual part of a dual is carried by epsilon. The major difference
+with complex numbers is that instead of the imaginary unit i^2 = -1,
+ε^2 = 0.</p>
+<p>dual = real + dual_part * ε</p>
+<p>Parameters:</p>
+<dl class="simple">
+<dt>real: float or int</dt><dd><p>the real part of a dual number</p>
+</dd>
+<dt>dual: float or int</dt><dd><p>the dual part of the dual number , default to 0</p>
+</dd>
+</dl>
+<p>Examples:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d1</span> <span class="o">=</span> <span class="n">Dual</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="c1"># Dual number with real part 5 and dual part 0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d2</span>  <span class="o">=</span> <span class="n">Dual</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="c1"># Dual number with real part 5, dual part 3</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dual_autodiff.Dual.__mul__">
+<span class="sig-name descname"><span class="pre">__mul__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other_dual</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dual_autodiff.Dual.__mul__" title="Link to this definition"></a></dt>
+<dd><p>This multiplication method computes the product of the
+current dual number and another number (either dual or scalar):</p>
+<p>(a + bε) * (c + dε) = (a * c) + (a * d + b * c)ε</p>
+<p>Returns:</p>
+<dl class="simple">
+<dt>Dual</dt><dd><p>A new Dual object that is the result of the multiplication
+between the current dual and the other dual/scalar value.</p>
+</dd>
+</dl>
+<p>Examples:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d1</span> <span class="o">=</span> <span class="n">Dual</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d2</span> <span class="o">=</span> <span class="n">Dual</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d1</span> <span class="o">*</span> <span class="n">d2</span>
+<span class="go">Dual(real = 6, dual = 17)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d1</span> <span class="o">*</span> <span class="mi">5</span>
+<span class="go">Dual(real = 10, dual = 15)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dual_autodiff.Dual.__sub__">
+<span class="sig-name descname"><span class="pre">__sub__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other_dual</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dual_autodiff.Dual.__sub__" title="Link to this definition"></a></dt>
+<dd><p>This subtract method computes the subtraction of the current
+dual number and another number (either dual or scalar):</p>
+<p>(a + bε) - (c + dε) = (a - c) + (b - d)ε</p>
+<p>Returns:</p>
+<dl class="simple">
+<dt>Dual</dt><dd><p>A new Dual object that is the result of a subtraction
+between the current dual and the other dual/scalar value.</p>
+</dd>
+</dl>
+<p>Examples:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d1</span> <span class="o">=</span> <span class="n">Dual</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d2</span> <span class="o">=</span> <span class="n">Dual</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d1</span> <span class="o">-</span> <span class="n">d2</span>
+<span class="go">Dual(real = -1, Dual = -1)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d1</span> <span class="o">-</span> <span class="mi">5</span>
+<span class="go">Dual(real = -3, Dual = 3.0)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dual_autodiff.Dual.__truediv__">
+<span class="sig-name descname"><span class="pre">__truediv__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other_dual</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dual_autodiff.Dual.__truediv__" title="Link to this definition"></a></dt>
+<dd><p>This true division method computes the remainder of the
+current dual number and another number (either dual or scalar):</p>
+<p>(a + bε) / (c + dε) = (a / c) + ((b * c - a * d) / c^2)ε</p>
+<p>Returns:</p>
+<dl class="simple">
+<dt>Dual</dt><dd><p>A new Dual object that is the result of dividing the current
+dual and the other dual/scalar value.</p>
+</dd>
+</dl>
+<p>Examples:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d1</span> <span class="o">=</span> <span class="n">Dual</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d2</span> <span class="o">=</span> <span class="n">Dual</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d2</span> <span class="o">/</span> <span class="n">d1</span>
+<span class="go">Dual(real = 1.5, dual = -0.25)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d2</span> <span class="o">/</span> <span class="mi">2</span>
+<span class="go">Dual(real = 1.5, dual = 2.0)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dual_autodiff.Dual.cos">
+<span class="sig-name descname"><span class="pre">cos</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dual_autodiff.Dual.cos" title="Link to this definition"></a></dt>
+<dd><p>This method computes the cosine of a dual number:</p>
+<p>cos(a + bε) = cos(a) - b * sin(a)ε</p>
+<p>Returns:</p>
+<dl class="simple">
+<dt>Dual</dt><dd><p>A new Dual object representing the cosine of the original dual number.</p>
+</dd>
+</dl>
+<p>Examples:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d1</span> <span class="o">=</span> <span class="n">Dual</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d1</span><span class="o">.</span><span class="n">cos</span><span class="p">()</span>
+<span class="go">Dual(real = 1.0, dual = -0.0)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d2</span> <span class="o">=</span> <span class="n">Dual</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d2</span><span class="o">.</span><span class="n">cos</span><span class="p">()</span>
+<span class="go">Dual(real = 1.0, dual = -0.0)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dual_autodiff.Dual.exp">
+<span class="sig-name descname"><span class="pre">exp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dual_autodiff.Dual.exp" title="Link to this definition"></a></dt>
+<dd><p>This method computes the exponential of a dual number:</p>
+<p>exp(a + bε) = exp(a) + exp(a) * bε</p>
+<p>Returns:</p>
+<dl class="simple">
+<dt>Dual</dt><dd><p>A new Dual object representing the exponential of the original dual number.</p>
+</dd>
+</dl>
+<p>Examples:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d1</span> <span class="o">=</span> <span class="n">Dual</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d1</span><span class="o">.</span><span class="n">exp</span><span class="p">()</span>
+<span class="go">Dual(real = 1.0, dual = 1.0)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d2</span> <span class="o">=</span> <span class="n">Dual</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d2</span><span class="o">.</span><span class="n">exp</span><span class="p">()</span>
+<span class="go">Dual(real = 1.0, dual = 2.0)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dual_autodiff.Dual.log">
+<span class="sig-name descname"><span class="pre">log</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dual_autodiff.Dual.log" title="Link to this definition"></a></dt>
+<dd><p>This method computes the natural logrithm of a dual number:</p>
+<p>log(a + bε) = log(a) + (b / a)ε</p>
+<p>Returns:</p>
+<dl class="simple">
+<dt>Dual</dt><dd><p>A new Dual object after taking the natural logrithm of the original dual number.</p>
+</dd>
+</dl>
+<p>Examples:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d1</span> <span class="o">=</span> <span class="n">Dual</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d1</span><span class="o">.</span><span class="n">log</span><span class="p">()</span>
+<span class="go">Dual(real = 0.0, dual = 0.1)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d2</span> <span class="o">=</span> <span class="n">Dual</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d2</span><span class="o">.</span><span class="n">log</span><span class="p">()</span>
+<span class="go">Dual(real = 0.693147, dual = 1.0)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dual_autodiff.Dual.sin">
+<span class="sig-name descname"><span class="pre">sin</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dual_autodiff.Dual.sin" title="Link to this definition"></a></dt>
+<dd><p>This method computes the sin of a dual number:</p>
+<p>sin(a + bε) = sin(a) + b * cos(a)ε</p>
+<p>Returns:</p>
+<dl class="simple">
+<dt>Dual</dt><dd><p>A new Dual object representing the sine of the original dual number.</p>
+</dd>
+</dl>
+<p>Examples:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d1</span> <span class="o">=</span> <span class="n">Dual</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d1</span><span class="o">.</span><span class="n">sin</span><span class="p">()</span>
+<span class="go">Dual(real = 0.0, dual = 1.0)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d2</span> <span class="o">=</span> <span class="n">Dual</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d2</span><span class="o">.</span><span class="n">sin</span><span class="p">()</span>
+<span class="go">Dual(real = 0.0, dual = 2.0)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dual_autodiff.Dual.tan">
+<span class="sig-name descname"><span class="pre">tan</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dual_autodiff.Dual.tan" title="Link to this definition"></a></dt>
+<dd><p>This method computes the tangent of a dual number:</p>
+<p>tan(a + bε) = tan(a) + b / cos^2(a)ε</p>
+<p>Returns:</p>
+<dl class="simple">
+<dt>Dual</dt><dd><p>A new Dual object represnting the tangent of the original dual number.</p>
+</dd>
+</dl>
+<p>Examples:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d1</span> <span class="o">=</span> <span class="n">Dual</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d1</span><span class="o">.</span><span class="n">tan</span><span class="p">()</span>
+<span class="go">Dual(real = 0.0, dual = 1.0)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d2</span> <span class="o">=</span> <span class="n">Dual</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d2</span><span class="o">.</span><span class="n">tan</span><span class="p">()</span>
+<span class="go">Dual(real = 0.0, dual = 2.0)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h1>
+<p>Ensure you have Python 3.6 or higher. Install the package and its dependencies with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+</pre></div>
+</div>
+</section>
+<section id="usage">
+<h1>Usage<a class="headerlink" href="#usage" title="Link to this heading"></a></h1>
+<p>Here’s a quick example of how to use the package:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dual_autodiff.dual</span> <span class="kn">import</span> <span class="n">Dual</span>
+
+<span class="n">dual_test1</span> <span class="o">=</span> <span class="n">Dual</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">dual_test2</span> <span class="o">=</span> <span class="n">Dual</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">dual_test1</span> <span class="o">+</span> <span class="n">dual_test2</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="contributing">
+<h1>Contributing<a class="headerlink" href="#contributing" title="Link to this heading"></a></h1>
+<p>Contributions are welcome! Fork our repository and submit a pull request.</p>
+</section>
+<section id="license">
+<h1>License<a class="headerlink" href="#license" title="Link to this heading"></a></h1>
+<p>This project is licensed under the MIT License - see the <cite>LICENSE</cite> file for details.</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Dual_Autodiff Package Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="dual_autodiff.html" class="btn btn-neutral float-right" title="Dual Autodiff Tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Lily Rausser.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
